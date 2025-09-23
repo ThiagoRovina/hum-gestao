@@ -1,0 +1,12 @@
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native" xmlns:w="http://www.zkoss.org/2005/zk/client">
+    <nodom id="footer" use="humcare.login.controller.FooterController" zclass="z-window-overlapped">
+        <div id="div_prod" class="col text-center bg-body-secondary text-secondary" style="position: relative; min-height: 69px; line-height: 69px;" visible="false">
+            <n:span class="fw-bold">NPD - Núcleo de Processamento de Dados</n:span>
+        </div>
+
+        <div id="div_desenv" class="col text-center bg-body-secondary text-danger" style="position: relative; min-height: 69px; line-height: 69px;" visible="false">
+            <n:span class="fw-bold">Você está conectado no banco de dados de testes!</n:span>
+        </div>
+    </nodom>
+
+</zk>

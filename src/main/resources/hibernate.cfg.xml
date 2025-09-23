@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <!-- Dados de conexão com o banco de dados -->
+
+        <property name="hibernate.hikari.dataSource.serverName">${DB_HOST}</property>
+        <property name="hibernate.hikari.dataSource.portNumber">${DB_PORT}</property>
+        <property name="hibernate.hikari.dataSource.databaseName">${DB_DBNAME}</property>
+        <property name="hibernate.hikari.dataSource.user">${DB_USERNAME}</property>
+        <property name="hibernate.hikari.dataSource.password">${DB_PASSWORD}</property>
+
+        <!-- Configurações HikariCP -->
+
+        <property name="hibernate.hikari.dataSourceClassName">com.ibm.db2.jcc.DB2SimpleDataSource</property>
+        <property name="hibernate.hikari.dataSource.driverType">4</property>
+        <property name="hibernate.hikari.autoCommit">true</property>
+        <property name="hibernate.hikari.minimumIdle">1</property>
+        <property name="hibernate.hikari.maximumPoolSize">10</property>
+        <property name="hibernate.hikari.maxLifetime">900000</property>
+        <property name="hibernate.hikari.idleTimeout">30000</property>
+        <property name="hibernate.hikari.leakDetectionThreshold">30000</property>
+
+        <!-- Configurações HikariCP Logging -->
+
+        <property name="com.zaxxer.hikari.level">TRACE</property>
+        <property name="logging.level.com.zaxxer.hikari.HikariConfig">DEBUG</property>
+
+        <!-- Configurações Hibernate -->
+
+        <property name="hibernate.connection.provider_class">com.zaxxer.hikari.hibernate.HikariConnectionProvider</property>
+        <property name="hibernate.connection.release_mode">on_close</property>
+        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.use_sql_comments">false</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.query.factory_class">org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory</property>
+        <property name="hibernate.cache.provider_class">org.hibernate.cache.internal.NoCachingRegionFactory</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.DB2Dialect </property>
+
+        <!-- Lista das classes modelo que representa tabelas do banco de dados para o hibernate mapear -->
+
+        <!--        <mapping class="curso.model.Curso"/>-->
+        <!-- Lista das classes do Banco -->
+<!--        <mapping class="inscricao.model.Inscricao" />-->
+<!--        <mapping class="pessoa.model.Pessoa" />-->
+<!--        <mapping class="inventario.model.Inventario" />-->
+<!--        <mapping class="anexo.model.AnexoManutencao" />-->
+<!--        <mapping class="tipoequipamento.model.TipoEquipamento" />-->
+<!--        <mapping class="tipoaquisicao.model.TipoAquisicao" />-->
+<!--        <mapping class="destino.model.Destino" />-->
+<!--        <mapping class="empresamanutencao.model.EmpresaManutencao" />-->
+<!--        <mapping class="cehusuario.model.CehUsuario" />-->
+<!--        &lt;!&ndash;        <mapping class="Procedencia.model.Procedencia" />&ndash;&gt;-->
+<!--        <mapping class="motivomanutencao.model.MotivoManutencao" />-->
+<!--        <mapping class="equipamento.model.Equipamento" />-->
+<!--        <mapping class="equipamento.dto.EquipamentoListDTO" />-->
+<!--        <mapping class="processoDeManutencao.model.ProcessoDeManutencao" />-->
+<!--        <mapping class="anexo.model.AnexoEquipamento" />-->
+<!--        <mapping class="obsequipamento.model.ObsEquipamento" />-->
+<!--        <mapping class="setor.model.Setor" />-->
+
+
+
+<!--        <mapping class="arsenal.model.Arsenal" />-->
+<!--        <mapping class="permissao.model.Permissao" />-->
+<!--        <mapping class="solicitacao.model.Solicitacao" />-->
+<!--        <mapping class="application.model.PatrimonioSetor" />-->
+<!--        <mapping class="application.model.CehLog" />-->
+<!--        <mapping class="application.model.BaseEntity" />-->
+<!--        <mapping class="transferenciaproibida.model.TransferenciaProibida" />-->
+<!--        <mapping class="equipamento.search.BandboxSearchEquipamento" />-->
+<!--        <mapping class="equipamento.search.BandboxEquipamento" />-->
+<!--        <mapping class="solicitacaopaciente.model.SolicitacaoPaciente" />-->
+<!--        <mapping class="checklist.model.CheckList" />-->
+<!--        <mapping class="checklistitem.model.CheckListItem" />-->
+
+    </session-factory>
+</hibernate-configuration>

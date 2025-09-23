@@ -1,0 +1,13 @@
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native" xmlns:w="client">
+    <!--    <nodom  id="winHeader" use="header.controller.HeaderController">-->
+    <n:nav class="navbar pt-0 pl-0 pb-2" style="margin-top: 2%; margin-left: 2%">
+        <div class="container-fluid p-0">
+            <div class="d-flex pull-left m-0 h4">
+                <div>
+                    <image src="/images/humlogo.png" width="60%"/>
+                </div>
+            </div>
+        </div>
+    </n:nav>
+    <!--    </nodom>-->
+</zk>

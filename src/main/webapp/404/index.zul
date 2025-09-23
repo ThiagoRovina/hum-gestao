@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- CSS básicos -->
+<?link rel="stylesheet" type="text/css" href="/css/bootstrap.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/zkbootstrap.css"?>
+
+<!-- Ícones dos favoritos -->
+<?link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"?>
+<?link rel="icon" type="image/x-icon" href="/images/favicon.ico"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
+
+    <style>
+        body{
+        background-color:var(--bs-tertiary-bg);
+        }
+    </style>
+    
+    <zscript language="Java">
+        <![CDATA[
+            import application.service.Application;
+            String tituloPadrao = Application.getInstance().getProperty(Application.NAME) + " - " + Application.getInstance().getProperty(Application.DESCRIPTION);
+        ]]>
+    </zscript>
+ 
+    <div class="container-fluid p-5">
+        <n:h1 class="display-5">404</n:h1>
+        <n:p class="col-md-8 fs-4">Página não encontrada</n:p>
+        <n:hr class="my-4" />
+        <n:p>
+            ${tituloPadrao}
+        </n:p>
+        <n:p class="">
+            <button label="Ir para o início" class="btn btn-primary" href="/"/>
+        </n:p>
+    </div>
+
+</zk>
