@@ -36,7 +36,9 @@ Sumário
 EQUIPE
 
 Responsável: Elias Cesar Araujo de Carvalho
+
 Desenvolvedor: Thiago Rodrigues Rovina
+
 Solicitante:  
 Data:
 Analistas:  Elias Cesar Araujo de Carvalho;
