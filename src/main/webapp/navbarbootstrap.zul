@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native" xmlns:w="client">
+
+    <nodom id="winMenu" use="humcare.menu.controller.MenuController">
+
+        <n:nav class="navbar navbar-expand-lg navbar-light bg-light border bg-white">
+            <div class="container-fluid">
+                <n:button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <n:span class="navbar-toggler-icon"></n:span>
+                </n:button>
+                <n:div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <n:ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <n:li class="nav-item">
+                            <a class="nav-link link-dark btn btn-light" href="#" onClick="winMenu.abrirHome()">Home</a>
+                        </n:li>
+<!--                        <n:li class="nav-item dropdown">-->
+<!--                            <n:a class="nav-link link-dark btn btn-light dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--                                Cadastros-->
+<!--                            </n:a>-->
+<!--                            <n:ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--                                &lt;!&ndash;                                <n:li>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <a class="dropdown-item link-dark btn btn-light" href="#" onClick="winMenu.abrirCurso()">Curso</a>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                </n:li>&ndash;&gt;-->
+<!--                                <n:li>-->
+<!--                                    <a class="dropdown-item link-dark btn btn-light" href="#" onClick="winMenu.abrirCidades()">Cidade</a>-->
+<!--                                </n:li>-->
+<!--                                <n:li>-->
+<!--                                    <a class="dropdown-item link-dark btn btn-light" href="#" onClick="winMenu.abrirDiurese()">Diurese</a>-->
+<!--                                </n:li>-->
+<!--                                <n:li>-->
+<!--                                    <a class="dropdown-item link-dark btn btn-light" href="#" onClick="winMenu.abrirDreno()">Dreno</a>-->
+<!--                                </n:li>-->
+<!--                                <n:li>-->
+<!--                                    <a class="dropdown-item link-dark btn btn-light" href="#" onClick="winMenu.abrirDrogas()">Droga</a>-->
+<!--                                </n:li>-->
+<!--                                <n:li>-->
+<!--                                    <a class="dropdown-item link-dark btn btn-light" href="#" onClick="winMenu.abrirLeitos()">Leito</a>-->
+<!--                                </n:li>-->
+<!--                                <n:li>-->
+<!--                                    <a class="dropdown-item link-dark btn btn-light" href="#" onClick="winMenu.abrirMedicacao()">Medicamento</a>-->
+<!--                                </n:li>-->
+<!--                                <n:li>-->
+<!--                                    <a class="dropdown-item link-dark btn btn-light" href="#" onClick="winMenu.abrirPacientes()">Paciente</a>-->
+<!--                                </n:li>-->
+<!--                                <n:li>-->
+<!--                                    <a class="dropdown-item link-dark btn btn-light" href="#" onClick="winMenu.abrirRiscos()">Risco</a>-->
+<!--                                </n:li>-->
+<!--                                <n:li>-->
+<!--                                    <a class="dropdown-item link-dark btn btn-light" href="#" onClick="winMenu.abrirSondas()">Sonda</a>-->
+<!--                                </n:li>-->
+<!--                                <div id="menuUsuario" visible="false">-->
+<!--                                    <n:li>-->
+<!--                                        <a class="dropdown-item link-dark btn btn-light" href="#" onClick="winMenu.abrirUsuarios()">Usuário</a>-->
+<!--                                    </n:li>-->
+<!--                                </div>-->
+<!--                            </n:ul>-->
+<!--                        </n:li>-->
+<!--                        <n:li class="nav-item">-->
+<!--                            <a class="nav-link link-dark btn btn-light" href="#" onClick="winMenu.abrirRelatorios()">Relatorios</a>-->
+<!--                        </n:li>-->
+                    </n:ul>
+                    <n:form class="d-flex">
+                        <div id="divLogout" visible="false" onClick="winMenu.logout()" style="cursor: pointer;" class="btn btn-outline-secondary">
+                            <label id="lbNomeUsuario" />
+                            <div class="ml-1 z-icon-sign-out" />
+                        </div>
+                    </n:form>
+                </n:div>
+            </div>
+        </n:nav>
+
+
+    </nodom>
+
+</zk>

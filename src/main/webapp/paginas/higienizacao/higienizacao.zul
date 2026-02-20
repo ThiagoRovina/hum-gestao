@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/bootstrap.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/zkbootstrap.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/fontawesome.css"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
+
+    <window id="winHigienizacao" use="humcare.higienizacao.controller.HigienizacaoController" border="none">
+        <div sclass="container-fluid" style="padding: 45px;">
+
+            <!-- Cabeçalho da Página -->
+            <div class="d-flex pb-4">
+                <div class="col">
+                    <n:h4>Gerenciar Estado do Leito</n:h4>
+                </div>
+                <div class="col text-end">
+                    <button label="Voltar para o Painel" iconSclass="z-icon-arrow-left" onClick="winHigienizacao.voltar()" sclass="btn btn-secondary"/>
+                </div>
+            </div>
+
+            <!-- Card de Informações do Leito -->
+            <div sclass="card">
+                <div sclass="card-header">
+                    <label id="idLeito" style="font-size: 1.5rem; font-weight: bold;"/>
+                </div>
+                <div sclass="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-3">
+                            <label value="Status Atual:"/>
+                            <label id="statusLeito" style="font-size: 1.2rem; font-weight: bold;"/>
+                        </div>
+                        <div class="col-md-9 text-end">
+                            <!-- Botões de Ação -->
+                            <button id="btnIniciar" label="Iniciar Higienização" sclass="btn btn-info" visible="false"/>
+                            <button id="btnFinalizar" label="Finalizar Higienização" sclass="btn btn-success" visible="false"/>
+                            <button id="btnAdmitir" label="Admitir Paciente" sclass="btn btn-primary" visible="false"/>
+                            <button id="btnDesativar" label="Equipamento em Manutenção" sclass="btn btn-warning" visible="false"/>
+                            <button id="btnAtivar" label="Ativar Leito" sclass="btn btn-success" visible="false"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Histórico de Higienizações -->
+            <div sclass="card mt-4">
+                <div sclass="card-header">
+                    <n:h5>Histórico de Atividades</n:h5>
+                </div>
+                <div sclass="card-body">
+                    <listbox id="historicoListbox" mold="paging" pageSize="5" emptyMessage="Nenhuma atividade registrada para este leito.">
+                        <listhead>
+                            <listheader label="Tipo"/>
+                            <listheader label="Início"/>
+                            <listheader label="Fim"/>
+                            <listheader label="Tempo"/>
+                            <listheader label="Solicitante"/>
+                            <listheader label="Responsável"/>
+                        </listhead>
+                        <template name="model">
+                            <listitem>
+                                <listcell label="${each.tpHigienizacao}" />
+                                <listcell label="${each.dhInicio}" />
+                                <listcell label="${each.dhFim}" />
+                                <listcell label="${each.duracaoMinutos}" />
+                                <listcell label="${each.nmUsuarioSolicitacao}" />
+                                <listcell label="${each.nmUsuarioHigienizacao}" />
+                            </listitem>
+                        </template>
+                    </listbox>
+                </div>
+            </div>
+
+        </div>
+
+
+        <window id="modalIniciarHigienizacao" title="Iniciar Higienização" border="normal" width="400px" visible="false" mode="modal">
+            <div style="padding: 20px;">
+                <label value="Selecione o tipo de higienização:"/>
+                <listbox id="tpHigienizacaoModal" mold="select" sclass="form-select mt-2"/>
+                <div class="d-flex justify-content-end mt-4">
+                    <button id="btnConfirmarInicio" label="Confirmar" sclass="btn btn-primary"/>
+                    <button id="btnCancelarInicio" label="Cancelar" sclass="btn btn-secondary ms-2"/>
+                </div>
+            </div>
+        </window>
+
+    </window>
+</zk>

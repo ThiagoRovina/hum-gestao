@@ -1,0 +1,46 @@
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
+    
+    <!--
+    Multi-Step Progress Bar feito em CSS e jQuery.    
+    
+    Uso:
+    Importar o arquivo stepbar.css em seu projeto.
+    Utilizar o arquivo stepbar.zul com include no seu arquivo ZK.
+    Chamar função JavaScript stepbarPasso() no arquivo .java passando os parâmetros "passo atual", o "total de passos" e opcionalmente uma "lista com descrições" para cada passo.
+    Exemplo: Clients.evalJavaScript("stepbarPasso(3,5,['Pêra','Uva','Maçã','Salada Mista','Banana']);");
+
+    CSS por Muhammed Athimannil https://codepen.io/athimannil/pen/wWPYkQ 
+    jQuery e adaptações para ZK por Alison R. P. Freitas, NPD-UEM, em 22/05/2019 
+    -->
+    
+    <script>
+        function stepbarPasso(passo, total, lista) {
+            stepbarCriar(total, lista);
+            stepbarSelecionar(passo);
+        }
+        
+        function stepbarSelecionar(passo) {
+            jq('.multi-steps li').removeClass('is-active');
+            jq('.multi-steps li').eq(passo-1).addClass('is-active');
+        }
+        
+        function stepbarCriar(total, lista){
+            jq('.multi-steps').empty();
+            var i = 0;
+            while (i != total) {
+                i = i + 1;
+                if (lista) {
+                    jq('.multi-steps').append('<li>' + lista[i-1] + '</li>');
+                }else{
+                    jq('.multi-steps').append('<li></li>');
+                }
+            }
+        }
+    </script>
+
+    <n:div class="multi-steps-container" >
+        <n:ul class="multi-steps">
+        </n:ul>
+    </n:div>
+
+</zk>

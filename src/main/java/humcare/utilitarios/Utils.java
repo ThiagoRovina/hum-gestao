@@ -131,7 +131,7 @@ public class Utils {
         try {
             di = sdf.parse(dataNormalInicio);
             df = sdf.parse(dataNormalFim);
-        } catch (java.text.ParseException e) {
+        } catch (ParseException e) {
             return "";
         }
 

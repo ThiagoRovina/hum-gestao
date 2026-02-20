@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native" xmlns:ca="client/attribute">
+    <window title="" id="winLeitosList" border="none"
+            use="humcare.leitos.controller.LeitosListController">
+        <div sclass="container-fluid" style="padding: 45px;">
+            <div class="d-flex bd-highlight">
+                <div class="p-2 flex-grow-1 bd-highlight">
+                    <label value="LEITOS" style="font-size: 24px; font-weight: bold; color: #333;" />
+                    <div sclass="text-muted" style="margin-top: 5px;">
+                        Cadastro de Leitos HUM Care
+                    </div>
+                </div>
+                <div class="pd-2 bd-highlight">
+                    <button label="Voltar" iconSclass="z-icon-arrow-left" sclass="btn btn-light"
+                            onClick="winLeitosList.voltar()" />
+                </div>
+            </div>
+
+            <separator bar="true" style="margin-top: 15px; margin-bottom: 25px;" />
+
+            <hlayout valign="middle">
+                <textbox id="vlPesquisa" placeholder="Buscar por código do Leito" hflex="3" sclass="form-control"
+                         onOK="winLeitosList.filtrar()" />
+
+                <listbox id="vlFiltroUnidade" mold="select" hflex="3" sclass="form-select" onSelect="winLeitosList.filtrar()">
+                    <listitem value="0" label="Todas as Unidades" selected="true" />
+                </listbox>
+
+                <listbox id="vlFiltroStatusLeito" mold="select" hflex="3" sclass="form-select" onSelect="winLeitosList.filtrar()">
+                    <listitem value="" label="Todos os Status" selected="true" />
+                </listbox>
+
+                <listbox id="vlFiltroAtivo" mold="select" hflex="3" sclass="form-select" onSelect="winLeitosList.filtrar()">
+                    <listitem value="TODOS" label="Todos" selected="true" />
+                    <listitem value="ATIVOS" label="Ativos" />
+                    <listitem value="INATIVOS" label="Inativos" />
+                </listbox>
+
+                <button iconSclass="z-icon-search" label="Filtrar" onClick="winLeitosList.filtrar()" />
+
+                <div hflex="3" style="text-align: right;">
+                    <button id="btnNovo" label="+ NOVO LEITO" sclass="btn-primary"
+                            onClick="winLeitosList.novoLeito()" />
+                </div>
+            </hlayout>
+
+            <separator height="25px" />
+
+            <grid id="resultados" mold="paging" pageSize="10" emptyMessage="Nenhum leito encontrado.">
+                <columns>
+                    <column label="UNIDADE" />
+                    <column label="LEITO" />
+                    <column label="SITUAÇÃO DO LEITO" />
+                    <column label="STATUS" width="120px" align="center" />
+                    <column width="120px" align="center">Ações</column>
+                </columns>
+                <template name="model">
+                    <row>
+                        <cell>${each.deUnidade}</cell>
+                        <cell>${each.idLeito}</cell>
+                        <cell>${each.stLeito.descricao}</cell>
+                        <cell>
+                            <label value="${each.flAtivo ? 'Ativo' : 'Inativo'}"
+                                   sclass="${each.flAtivo ? 'status-ativo' : 'status-inativo'}" />
+                        </cell>
+                        <cell>
+                            <hlayout>
+<!--                                <button sclass="border-0 btn btn-outline-info" iconSclass="z-icon-eye"-->
+<!--                                        onClick="winLeitosList.onClickedVerLeito(event)">-->
+<!--                                    <attribute ca:name="id" name="id">${each.cdLeito}</attribute>-->
+<!--                                </button>-->
+                                <button sclass="border-0 btn btn-outline-primary" iconSclass="z-icon-pencil"
+                                        onClick="winLeitosList.onClickedAlterarLeito(event)">
+                                    <attribute ca:name="id" name="id">${each.cdLeito}</attribute>
+                                </button>
+                                <button sclass="border-0 btn btn-outline-danger" iconSclass="z-icon-trash"
+                                        onClick="winLeitosList.onClickedDeletarLeito(event)">
+                                    <attribute ca:name="id" name="id">${each.cdLeito}</attribute>
+                                </button>
+                            </hlayout>
+                        </cell>
+                    </row>
+                </template>
+            </grid>
+        </div>
+
+        <style>
+            .btn-primary {
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            font-weight: bold;
+            padding: 8px 18px;
+            border-radius: 4px;
+            }
+
+            .status-ativo {
+            background-color: #d4edda; /* Verde claro */
+            color: #155724; /* Verde escuro */
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-weight: bold;
+            }
+
+            .status-inativo {
+            background-color: #f8d7da; /* Vermelho claro */
+            color: #721c24; /* Vermelho escuro */
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-weight: bold;
+            }
+
+            .form-select.z-listbox-select {
+            background-color: #E9ECEF;
+            border: 1px solid #CED4DA;
+            padding: .375rem 2.25rem .375rem .75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right .75rem center;
+            background-size: 16px 12px;
+            border-radius: .25rem;
+            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            }
+
+            .badge {
+            display: inline-block;
+            padding: .35em .65em;
+            font-size: .75em;
+            font-weight: 700;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: .25rem;
+            }
+
+            .bg-success { background-color: #198754; }
+            .bg-danger { background-color: #dc3545; }
+        </style>
+    </window>
+</zk>

@@ -1,8 +1,6 @@
 package humcare.dao;
 
 import io.hypersistence.utils.hibernate.query.SQLExtractor;
-import java.sql.Connection;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -11,6 +9,8 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.jdbc.ReturningWork;
 import org.hibernate.query.Query;
+
+import java.sql.Connection;
 
 public class DAO {
 
@@ -24,7 +24,7 @@ public class DAO {
             Metadata metaData = new MetadataSources(standardRegistry).getMetadataBuilder().build();
             sessionFactory = metaData.getSessionFactoryBuilder().build();
         } catch (Exception e) {
-            System.out.println("Falha ao criar a fábrica de conexões com o banco de dados: " + ExceptionUtils.getStackTrace(e));
+            System.out.println("Falha ao criar a fábrica de conexões com o banco de dados: " + e.getMessage());
             throw new ExceptionInInitializerError(e);
         }
     }
@@ -64,7 +64,7 @@ public class DAO {
             ReturningWork<String> getConName = (Connection cnctn) -> cnctn.getMetaData().getURL();
             dbURL = session.doReturningWork(getConName);
         } catch (Exception e) {
-            System.out.println("Não foi possível obter o nome da conexão com o banco de dados: " + ExceptionUtils.getStackTrace(e));
+            System.out.println("Não foi possível obter o nome da conexão com o banco de dados: " + e.getMessage());
         } finally {
             closeSession(session);
         }
@@ -81,7 +81,7 @@ public class DAO {
     }
 
     public static void printException(Exception e) {
-        System.err.println(ExceptionUtils.getStackTrace(e));
+        e.printStackTrace();
     }
 
     public static void shutdown() {

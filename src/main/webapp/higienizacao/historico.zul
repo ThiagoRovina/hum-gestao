@@ -1,0 +1,26 @@
+<zk>
+    <window title="Histórico de Higienização" border="normal" apply="humcare.higienizacao.controller.HistoricoHigienizacaoController">
+        <listbox id="historicoListbox" mold="paging" pageSize="10">
+            <listhead>
+                <listheader label="Leito" />
+                <listheader label="Solicitação" />
+                <listheader label="Usuário Solic." />
+                <listheader label="Tipo" />
+                <listheader label="Início" />
+                <listheader label="Usuário Hig." />
+                <listheader label="Fim" />
+            </listhead>
+            <template name="model">
+                <listitem>
+                    <listcell label="${each.cdLeito}" />
+                    <listcell label="${each.dhSolicitacao}" />
+                    <listcell label="${each.cdUsuarioSolicitacao}" />
+                    <listcell label="${each.tpHigienizacao}" />
+                    <listcell label="${each.dhInicio}" />
+                    <listcell label="${each.cdUsuarioHigienizacao}" />
+                    <listcell label="${each.dhFim}" />
+                </listitem>
+            </template>
+        </listbox>
+    </window>
+</zk>

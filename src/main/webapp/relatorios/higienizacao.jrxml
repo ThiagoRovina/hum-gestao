@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="higienizacao"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="842"
+		 pageHeight="595"
+		 columnWidth="802"
+		 columnSpacing="0"
+		 leftMargin="20"
+		 rightMargin="20"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="unidadeHigienizacao" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="dtInicioHigienizacao" isForPrompting="false" class="java.util.Date"/>
+	<parameter name="dtFimHigienizacao" isForPrompting="false" class="java.util.Date"/>
+	<queryString><![CDATA[SELECT 
+            BHH.CD_HISTORICO_HIGIENIZACAO,
+            BHH.DH_SOLICITACAO,
+            BHH.DH_INICIO,
+            BHH.DH_FIM,
+            CASE BHH.TP_HIGIENIZACAO
+                WHEN 0 THEN 'Simples'
+                WHEN 1 THEN 'MR'
+                WHEN 2 THEN 'MR Preto'
+                ELSE 'Desconhecido'
+            END as TP_HIGIENIZACAO,
+            CASE BU.ST_LEITO
+                WHEN 0 THEN 'Livre'
+                WHEN 1 THEN 'Ocupado'
+                WHEN 2 THEN 'Em Higienização'
+                WHEN 3 THEN 'Pré-Reservado'
+                WHEN 4 THEN 'Aguardando Liberação'
+                WHEN 5 THEN 'Desativado'
+                ELSE 'Desconhecido'
+            END as ST_LEITO,
+            BU2.DE_UNIDADE,
+	    BU.ID_LEITO 
+        FROM HUM.BDC_HISTORICO_HIGIENIZACAO bhh
+        INNER JOIN HUM.BDC_LEITO bu 
+            ON BHH.CD_LEITO = BU.CD_LEITO 
+        LEFT JOIN HUM.BDC_UNIDADE bu2 
+            ON bu2.CD_UNIDADE = BU.CD_UNIDADE
+	WHERE BHH.DH_INICIO >= $P{dtInicioHigienizacao} AND BHH.DH_FIM <= $P{dtFimHigienizacao}
+	    AND BU2.CD_UNIDADE = $P{unidadeHigienizacao}]]></queryString>
+
+	<field name="CD_HISTORICO_HIGIENIZACAO" class="java.lang.Integer"/>
+	<field name="DH_SOLICITACAO" class="java.sql.Timestamp"/>
+	<field name="DH_INICIO" class="java.sql.Timestamp"/>
+	<field name="DH_FIM" class="java.sql.Timestamp"/>
+	<field name="TP_HIGIENIZACAO" class="java.lang.String"/>
+	<field name="ST_LEITO" class="java.lang.String"/>
+	<field name="DE_UNIDADE" class="java.lang.String"/>
+	<field name="ID_LEITO" class="java.lang.String"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="50"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="0"
+						y="10"
+						width="802"
+						height="30"
+						key="staticText"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font size="18" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Relatório de Histórico de Higienização]]></text>
+				</staticText>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="30"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="320"
+						y="0"
+						width="120"
+						height="20"
+						key="staticText"/>
+					<box></box>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+				<text><![CDATA[Início]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="440"
+						y="0"
+						width="120"
+						height="20"
+						key="staticText"/>
+					<box></box>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+				<text><![CDATA[Fim]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="560"
+						y="0"
+						width="100"
+						height="20"
+						key="staticText"/>
+					<box></box>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+				<text><![CDATA[Tipo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="160"
+						height="20"
+						key="staticText"/>
+					<box></box>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+				<text><![CDATA[Unidade]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="160"
+						y="0"
+						width="160"
+						height="20"
+						key="staticText-1"/>
+					<box></box>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+				<text><![CDATA[Leito]]></text>
+				</staticText>
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="25"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="320"
+						y="0"
+						width="120"
+						height="20"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$F{DH_INICIO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="440"
+						y="0"
+						width="120"
+						height="20"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$F{DH_FIM}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="560"
+						y="0"
+						width="100"
+						height="20"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{TP_HIGIENIZACAO}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="160"
+						height="20"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{DE_UNIDADE}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="22"
+						width="802"
+						height="1"
+						key="line"/>
+					<graphicElement stretchType="NoStretch">
+					<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+</graphicElement>
+				</line>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="160"
+						y="0"
+						width="160"
+						height="20"
+						key="textField-1"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ID_LEITO}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

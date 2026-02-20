@@ -1,285 +1,218 @@
 package humcare.login.controller;
 
-import humcare.application.service.Sessao;
-import humcare.application.service.Application;
 import humcare.application.model.Usuario;
-import humcare.cehusuario.tipopermissao.TipoCehUsuario;
-import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.util.Clients;
-import org.zkoss.zul.Div;
-import org.zkoss.zul.Textbox;
-import org.zkoss.zul.Window;
-import org.zkoss.zul.Include;
-import org.zkoss.zul.Label;
-import humcare.cehusuario.dao.CehUsuarioDAO;
-import humcare.cehusuario.model.CehUsuario;
+import humcare.application.service.Application;
+import humcare.application.service.Sessao;
 import humcare.permissao.dao.PermissaoDAO;
 import humcare.permissao.model.Permissao;
-import humcare.utilitarios.CookieUtil;
-import humcare.utilitarios.LdapUtil;
-import humcare.utilitarios.Utils;
-import humcare.utilitarios.ZkUtils;
-import humcare.zk.custom.Toast;
+import humcare.usuario.dao.CehUsuarioDAO;
+import humcare.usuario.funcao.FuncaoCdPerfil;
+import humcare.usuario.model.CehUsuario;
+import humcare.utilitarios.*;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zul.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
-/**
- * @author Alison
- */
 public class LoginController extends Window {
-
+    private Window win;
     private Textbox usuarioDigitado;
     private Textbox senhaDigitada;
-    private Include conteudo;
     private Label lbVersao;
     private Label lbErro;
     private Div divDesenv;
-    private Window janela;
 
-    //ATENCAO: EXCLUA OU ALTERE ESSA SENHA MESTRA
+    // ATENÇÃO: SENHA MESTRA PARA DESENVOLVIMENTO. REMOVER EM PRODUÇÃO.
     private final String SENHA_MESTRA = "admincehu1";
 
     private final LdapUtil ldapUtil = new LdapUtil();
     private final ZkUtils zkUtils = new ZkUtils();
-    CehUsuarioDAO cehUsuarioDAO = new CehUsuarioDAO();
-    CehUsuario cehUsuario = new CehUsuario();
+    private final CehUsuarioDAO cehUsuarioDAO = new CehUsuarioDAO();
+    private final Utils utils = new Utils();
 
-    private String parametroCdEquipamento;
+    private String parametroCdUsuario;
     private String parametroUrlRedirect;
 
-    private Utils utils = new Utils();
-
     public void onCreate() {
-        this.conteudo = (Include) getFellowIfAny("conteudo", true);
-        this.janela = (Window) getFellow("login");
+        // Mapeamento dos componentes da tela .zul
+        this.win = (Window) getFellow("winLogin");
         this.usuarioDigitado = (Textbox) getFellow("usuario");
         this.senhaDigitada = (Textbox) getFellow("senha");
         this.lbVersao = (Label) getFellow("lb_versao");
         this.lbErro = (Label) getFellow("msg_erro");
         this.divDesenv = (Div) getFellow("div_desenv");
 
+        // Configurações iniciais da tela
         String versao = Application.getInstance().getVersion();
         this.lbVersao.setValue("Versão " + versao);
-
         this.mensagemDesenvol();
-//        Application.getInstance().insereDadosNoConsole(this.janela);
         Application.getInstance().atualizaTituloDaPagina();
-
         verificaCookie();
-
         getParametrosURL();
     }
 
-    public void getParametrosURL() {
-        this.parametroCdEquipamento = Executions.getCurrent().getParameter("cdequipamento");
-        this.parametroUrlRedirect = Executions.getCurrent().getParameter("urlredirect");
-    }
-
     /**
-     * Executado quando clica no botão para entrar.
+     * Ponto de entrada do botão de login. Prepara os dados e chama a validação principal.
      */
     public void acessar() {
-        this.validaEmail();
+        try {
+            hideErro();
+            String login = usuarioDigitado.getValue().trim();
+            String senha = senhaDigitada.getValue();
+
+            if (!login.contains("@")) {
+                login = login.concat("@uem.br");
+            }
+
+            if (!utils.validaEmail(login)) {
+                showErro("O e-mail informado é inválido!");
+                return;
+            }
+
+            validarLogin(login, senha);
+
+
+        } catch (Exception e) {
+            System.out.println("--------------------- ERRO ----------------------");
+            e.printStackTrace();
+            System.out.println("-------------------------------------------------");
+        }
+    }
+
+    public void cadastrarUsuario(){
+        Executions.sendRedirect("/cadastroUsuario.zul");
     }
 
     /**
-     * Verifica se tem o último usuário que logou salvo em cookie, se tiver
-     * preenche o campo automaticamente.
+     * Valida o login de forma híbrida: primeiro checa o tipo de usuário (local ou LDAP)
+     * e depois valida a senha correspondente.
      */
+    private void validarLogin(String login, String senha) {
+        // Busca o usuário no nosso banco de dados primeiro
+        CehUsuario usuarioDoBanco = this.cehUsuarioDAO.buscaPorEmail(login);
+
+        if (usuarioDoBanco == null) {
+            zkUtils.MensagemAtencao("Usuário não encontrado. Se você ainda não tem acesso, por favor, realize o seu cadastro.");
+            return;
+        }
+
+        boolean senhaValida;
+
+        // Lógica para Senha Mestra (apenas para desenvolvimento)
+        if (senha.equals(SENHA_MESTRA)) {
+            senhaValida = true;
+        } else {
+            // Se o usuário TEM uma senha no nosso banco, ele é um "Credenciado"
+            if (usuarioDoBanco.getDeSenha() != null && !usuarioDoBanco.getDeSenha().isEmpty()) {
+                senhaValida = PasswordUtil.checkPassword(senha, usuarioDoBanco.getDeSenha());
+            } else {
+                // Se o campo de senha é nulo, ele é um usuário UEM -> valida no LDAP
+                senhaValida = isSenhaValidaLdap(login, senha);
+            }
+        }
+
+        if (!senhaValida) {
+            showErro("Login ou Senha incorretos!");
+            return;
+        }
+
+
+        if (!usuarioDoBanco.getFlAtivo()) {
+            showErro("Seu acesso está pendente de aprovação ou foi inativado. Por favor, contate o administrador.");
+            return;
+        }
+
+
+        if (usuarioDoBanco.getDePerfil() == null) {
+            showErro("Acesso bloqueado: seu usuário não possui um perfil de permissões definido. Contate o administrador.");
+            return;
+        }
+
+
+        this.configuraUsuarioSessao(usuarioDoBanco);
+    }
+
+    /**
+     * Configura a sessão do usuário após um login bem-sucedido.
+     * @param usuarioVerificado O objeto CehUsuario já validado.
+     */
+    private void configuraUsuarioSessao(CehUsuario usuarioVerificado) {
+        // Define os dados do usuário na sessão
+        FuncaoCdPerfil funcaoCdPerfil = usuarioVerificado.getDePerfil();
+        Usuario usuarioSession = new Usuario();
+        usuarioSession.setCdUsuario(usuarioVerificado.getCdPessoa());
+        usuarioSession.setEmail(usuarioVerificado.getDeEmail());
+        usuarioSession.setUsername(usuarioVerificado.getDeEmail().split("@")[0]);
+        usuarioSession.setTpPermissaoAcesso(funcaoCdPerfil);
+        usuarioSession.setNome(usuarioVerificado.getNmPessoa());
+
+        Sessao.getInstance().setUsuario(usuarioSession);
+        atualizaCookie();
+
+        // Carrega as permissões do perfil do usuário
+        List<Permissao> permissoes = PermissaoDAO.buscaPorTpPermissao(funcaoCdPerfil.getValor());
+        if (permissoes != null && !permissoes.isEmpty()) {
+            permissoes.forEach(p -> {
+                if (p.getFlIncluir()) Sessao.getInstance().setPermissao(p.getDeArquivo(), Sessao.INCLUIR);
+                if (p.getFlAlterar()) Sessao.getInstance().setPermissao(p.getDeArquivo(), Sessao.ALTERAR);
+                if (p.getFlExcluir()) Sessao.getInstance().setPermissao(p.getDeArquivo(), Sessao.EXCLUIR);
+                if (p.getFlConsultar()) Sessao.getInstance().setPermissao(p.getDeArquivo(), Sessao.CONSULTAR);
+                if (p.getDeMenu() != null) Sessao.getInstance().setPermissao(p.getDeMenu(), Sessao.MENU);
+            });
+        }
+
+        if (parametroUrlRedirect != null && !parametroUrlRedirect.isBlank() && usuarioSession.getTpPermissaoAcesso() != FuncaoCdPerfil.NIR) {
+            Executions.sendRedirect("/" + this.parametroUrlRedirect + "/?cdUsuario=" + this.parametroCdUsuario);
+        }else if(usuarioSession.getTpPermissaoAcesso() == FuncaoCdPerfil.NIR){
+            Executions.sendRedirect("paginas/higienizacao/higienizacaoList.zul");
+        }
+        else{
+            Executions.sendRedirect("/");
+        }
+    }
+
+    private boolean isSenhaValidaLdap(String login, String senha) {
+        try {
+            ldapUtil.bind(login, senha);
+            return true;
+        } catch (Exception e) {
+            // Não mostre o erro técnico para o usuário, apenas retorne false.
+            // A mensagem de "Login ou Senha incorretos" é mais segura.
+            System.err.println("LDAP Auth Error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    private void getParametrosURL() {
+        this.parametroCdUsuario = Executions.getCurrent().getParameter("cdUsuario");
+        this.parametroUrlRedirect = Executions.getCurrent().getParameter("urlredirect");
+    }
     private void verificaCookie() {
         String ultimoUsuario = CookieUtil.getCookie("usuariologin");
         if (ultimoUsuario != null) {
             this.usuarioDigitado.setValue(ultimoUsuario);
         }
     }
-
-    /**
-     * Salva em cookie o último usuário que logou.
-     */
     private void atualizaCookie() {
         CookieUtil.setCookie("usuariologin", this.usuarioDigitado.getValue());
     }
-
-    /**
-     * Valida a senha no LDAP da UEM. Funciona para todos que tiver um e-mail
-     * válido @uem.br
-     *
-     * @param login é o e-mail ou apenas o nome do usuário
-     * @param senha senha
-     * @return booleano
-     */
-    private boolean isSenhaValidaLdap(String login, String senha) {
-        try {
-            ldapUtil.bind(login, senha);
-        } catch (Exception e) {
-            this.showErro(e.getMessage());
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Valida a senha conforme cadastrado no banco de dados. Para implementar
-     * essa funcionalidade recomendo usar Argon2PasswordEncoder. Veja tutorial
-     * https://foojay.io/today/how-to-do-password-hashing-in-java-applications-the-right-way/
-     *
-     * @param login é o e-mail ou apenas o nome do usuário
-     * @param senha senha
-     * @return booleando
-     */
-    private boolean isSenhaValidaBanco(String login, String senha) {
-        return false;
-    }
-
-    private boolean isSenhaValidaBanco(String login) {
-        return false;
-    }
-
-    private boolean isSenhaMestra(String senha) {
-        return senha.equals(SENHA_MESTRA);
-    }
-
-    /**
-     * Validação do Email, permitindo o usuário acessar mesmo sem colocar um endereço (@....)
-     */
-    private void validaEmail() {
-        String login = this.usuarioDigitado.getValue();
-        String senha = this.senhaDigitada.getValue();
-        if (login.equals("bi-hum@uem.br") || login.equals("bi-hum")){
-            login = "ecacarva@uem.br";
-        }
-        if (login.contains("@")) {
-            if (!utils.validaEmail(login)) {
-                this.showErro("Login ou Senha incorretos!");
-            } else {
-                this.validarSessao(login, senha);
-            }
-        } else {
-            login = login.concat("@uem.br");
-            this.validarSessao(login, senha);
-        }
-    }
-
-    /**
-     * Se validar o email e a senha, salva na sessão o usuário que acessou com todos os
-     * dados necessários para o sistema funcionar, suas permissões, perfis, etc.
-     */
-    private void validarSessao(String login, String senha) {
-        boolean senhaValidaLdap = isSenhaValidaLdap(login, senha);
-        if (senhaValidaLdap) {
-            CehUsuario usu = this.criaUsuarioCasoNaoExista(login);
-
-            if (isSenhaMestra(senha) && usu.getFlAtivo()) {
-                this.configuraUsuarioSessao(login);
-            }
-
-            if (!usu.getFlAtivo()) {
-                this.showErro("Seu login esta Inativo, fale com o Administrador!");
-            } else {
-                this.configuraUsuarioSessao(login);
-            }
-
-        }
-
-        if (!senhaValidaLdap) {
-            this.showErro("Login ou Senha incorretos!");
-        }
-    }
-
-    private CehUsuario criaUsuarioCasoNaoExista(String login) {
-        CehUsuario uCeh = cehUsuarioDAO.buscaPorEmail(login);
-        if (uCeh == null) {
-            uCeh = new CehUsuario();
-            uCeh.setTpPermissaoAcesso(TipoCehUsuario.OPERADOR);
-            uCeh.setFlAtivo(true);
-            uCeh.setLtEmail(login);
-            uCeh.setNmUsuario(this.ldapUtil.getNomeCompleto().toUpperCase());
-            uCeh.setNuMatricula(Integer.parseInt(this.ldapUtil.getMatricula()));
-            Integer i = cehUsuarioDAO.incluirAutoincrementando(uCeh);
-            uCeh.setNuMatricula(i);
-            return uCeh;
-        }
-
-        return uCeh;
-    }
-
-    private void configuraUsuarioSessao(String login) {
-        cehUsuario = cehUsuarioDAO.buscaPorEmail(login);
-
-        // colocando na session
-        TipoCehUsuario tipoCehUsuario = TipoCehUsuario.getTipoCehUsuarioInt(cehUsuario.getTpPermissaoAcesso().getValor());
-        Usuario usuarioSession = new Usuario();
-        usuarioSession.setEmail(cehUsuario.getLtEmail());
-        usuarioSession.setUsername(cehUsuario.getLtEmail().split("@")[0]);
-        usuarioSession.setNome(cehUsuario.getNmUsuario());
-        usuarioSession.setTpPermissaoAcesso(tipoCehUsuario);
-        usuarioSession.setCdUsuario(cehUsuario.getCdUsuario());
-        usuarioSession.setNuMatricula(cehUsuario.getNuMatricula());
-
-        Sessao.getInstance().setUsuario(usuarioSession);
-        atualizaCookie();
-
-        List<Permissao> permissoes = PermissaoDAO.buscaPorTpPermissao(tipoCehUsuario.getValor());
-        if (!permissoes.isEmpty()) {
-            permissoes.forEach(p -> {
-                if (p.getFlIncluir()) {
-                    Sessao.getInstance().setPermissao(p.getDeArquivo(), Sessao.INCLUIR);
-                }
-                if (p.getFlAlterar()) {
-                    Sessao.getInstance().setPermissao(p.getDeArquivo(), Sessao.ALTERAR);
-                }
-                if (p.getFlExcluir()) {
-                    Sessao.getInstance().setPermissao(p.getDeArquivo(), Sessao.EXCLUIR);
-                }
-                if (p.getFlConsultar()) {
-                    Sessao.getInstance().setPermissao(p.getDeArquivo(), Sessao.CONSULTAR);
-                }
-                if (p.getDeMenu() != null) {
-                    Sessao.getInstance().setPermissao(p.getDeMenu(), Sessao.MENU);
-                }
-            });
-        }
-
-        if (this.parametroUrlRedirect != null
-                && this.parametroCdEquipamento != null
-                && !this.parametroUrlRedirect.isBlank()
-                && !this.parametroCdEquipamento.isBlank()
-        ) {
-            Executions.sendRedirect("/" + this.parametroUrlRedirect + "/?cdEquipamento=" + this.parametroCdEquipamento);
-        } else {
-            Executions.sendRedirect("/");
-        }
-    }
-
-
-    /**
-     * Mostra erro na tela de login
-     *
-     * @param msg = mensagem
-     */
     public void showErro(String msg) {
-        this.lbErro.setValue(msg);
-        this.lbErro.setVisible(true);
+        if (this.lbErro != null) {
+            this.lbErro.setValue(msg);
+            this.lbErro.setVisible(true);
+        } else {
+            // Se o label não for encontrado, mostra um alerta padrão do navegador
+            zkUtils.MensagemErro("Erro: " + msg);
+            System.err.println("ERRO GRAVE: Componente com id='msg_erro' não foi encontrado no arquivo .zul!");
+        }
     }
-
-    /**
-     * Esconde o erro na tela de login.
-     */
     public void hideErro() {
         this.lbErro.setValue("");
         this.lbErro.setVisible(false);
     }
-
-    /**
-     * Caso o ambiente de desenvolvimento seja de testes (não esteja conectado
-     * em produção), então mostra um aviso.
-     */
     private void mensagemDesenvol() {
         if (Application.getInstance().getEnviroment().equals(Application.DEVELOP)) {
             this.divDesenv.setVisible(true);
         }
     }
-
 }

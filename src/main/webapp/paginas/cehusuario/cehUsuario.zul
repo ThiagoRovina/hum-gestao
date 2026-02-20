@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
+
+    <window id="winCehUsuario" use="humcare.usuario.controller.CehUsuarioController" border="none">
+
+        <div sclass="container-fluid" style="padding: 45px;">
+
+            <div class="d-flex pb-4">
+                <div class="col">
+                    <n:h4>Cadastro de Usuário</n:h4>
+                </div>
+                <div class="col text-end">
+                    <button label="Voltar" iconSclass="z-icon-arrow-left" onClick="winCehUsuario.voltar()" sclass="btn btn-secondary"/>
+                </div>
+            </div>
+
+            <div sclass="card">
+                <div sclass="card-body">
+                    <div class="col-md-1" visible="false">
+                        <label value="Código:"  />
+                        <label id="cdPessoa" value=""/>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label value="E-Mail:*" />
+                            <textbox id="deEmail" maxlength="100" sclass="form-control" placeholder="usuario@dominio.com"/>
+                        </div>
+                        <div class="col-md-6">
+                            <label value="Nome Completo:*" />
+                            <textbox id="nmPessoa" maxlength="150" sclass="form-control" placeholder="Nome completo do usuário"/>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label value="Senha:*" id="lblSenha"/>
+                            <textbox id="deSenha" maxlength="150" sclass="form-control" placeholder="Digite uma senha" type="password"/>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-6">
+                            <label value="Função (Perfil):*" />
+                            <listbox id="dePerfil" mold="select" sclass="form-select">
+                                <listitem label="Selecione uma função..." selected="true" disabled="true" value=""/>
+                                <listitem label="Administrador" value="ADMINISTRADOR"/>
+                                <listitem label="NIR" value="NIR"/>
+<!--                                <listitem label="Equipe" value="EQUIPE"/>-->
+<!--                                <listitem label="Higienização" value="HIGIENIZACAO"/>-->
+                            </listbox>
+                        </div>
+                        <div class="col-md-2">
+                            <label value="CPF:*" />
+                            <textbox id="nuCpf" class="form-control cpfMask" placeholder="Apenas números"/>
+                        </div>
+                        <div class="col-md-2">
+                            <label value="Telefone:" />
+                            <textbox id="nuFone" class="form-control celularDddMask" placeholder="Apenas números"/>
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-2">
+                            <label id="lbAtivo" value="Status:" />
+                            <checkbox mold="switch" id="flAtivo" style="display: block;" onCheck="winCehUsuario.mudarativo()" />
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mt-4">
+                        <div class="d-flex">
+<!--                            <div class="col-md-6">-->
+<!--                                <button class="btn btn-outline-danger" iconSclass="z-icon-trash" id="excluir" label="Inativar Usuário" onClick="winCehUsuario.excluir()" visible="false"/>-->
+<!--                            </div>-->
+                            <div class="col-md-6 text-end">
+                                <button class="btn btn-secondary me-2" iconSclass="z-icon-times" id="cancelar" label="Cancelar" onClick="winCehUsuario.voltar()" visible="true"/>
+                                <button class="btn btn-primary" iconSclass="z-icon-check" id="salvar" label="Salvar" onClick="winCehUsuario.gravar()" visible="true"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </window>
+</zk>

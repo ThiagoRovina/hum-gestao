@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native" xmlns:ca="client/attribute">
+    <window title="" id="winUsuarioList" border="none"
+            use="humcare.usuario.controller.CehUsuarioListController">
+        <div sclass="container-fluid" style="padding: 45px;">
+            <div class="d-flex bd-highlight">
+                <div class="p-2 flex-grow-1 bd-highlight">
+                    <label value="EQUIPE" style="font-size: 24px; font-weight: bold; color: #333;" />
+                    <div sclass="text-muted" style="margin-top: 5px;">
+                        Cadastro equipe HUM Care
+                    </div>
+                </div>
+                <div class="pd-2 bd-highlight">
+                    <button label="Voltar" iconSclass="z-icon-arrow-left" sclass="btn btn-light"
+                            onClick="winUsuarioList.voltar()" />
+                </div>
+            </div>
+
+            <separator bar="true" style="margin-top: 15px; margin-bottom: 25px;" />
+
+            <hlayout valign="middle">
+                <hlayout hflex="2">
+                    <textbox id="vlPesquisa" placeholder="Busca profissional" hflex="1" sclass="form-control"
+                             onOK="winUsuarioList.filtrar(null)" />
+                </hlayout>
+                <div hflex="1">
+                    <listbox id="vlCampoFiltroPerfil" mold="select" sclass="form-select"
+                             onSelect="winUsuarioList.filtrar(null)">
+                        <listitem value="TODOS" label="Todos os Perfis" selected="true" />
+                        <listitem value="ADMINISTRADOR" label="Administrador" />
+                        <listitem value="EQUIPE" label="Equipe" />
+                        <listitem value="INVENTARIANTE" label="Inventariante" />
+                    </listbox>
+                </div>
+                <button iconSclass="z-icon-search" label="Filtrar" onClick="winUsuarioList.filtrar(null)" />
+
+                <div hflex="4"></div>
+
+                <div hflex="1" style="text-align: right;">
+                    <button id="btnNovo" label="+ NOVO" sclass="btn-primary"
+                            onClick="winUsuarioList.novoCehUsuario()" />
+                </div>
+            </hlayout>
+
+            <separator height="25px" />
+
+            <grid id="resultados" mold="paging" pageSize="10" emptyMessage="Nenhum profissional encontrado.">
+                <columns>
+                    <column label="PROFISSIONAL" />
+                    <column label="EMAIL" />
+                    <column label="PERFIL" />
+                    <column label="N° CPF" />
+                    <column label="TELEFONE" />
+                    <column label="STATUS" align="center"/>
+                    <column width="120px" align="center">Ações</column>
+                </columns>
+                <template name="model">
+                    <row>
+                        <cell>${each.nmPessoa}</cell>
+                        <cell>${each.deEmail}</cell>
+                        <cell>${each.dePerfil}</cell>
+                        <cell class="cpfMask">${each.nuCpf}</cell>
+                        <cell class="celularDddMask">${each.nuFone}</cell>
+                        <cell>
+                            <label value="${each.flAtivo ? 'Ativo' : 'Inativo'}" 
+                                   sclass="${each.flAtivo ? 'status-ativo' : 'status-inativo'}" />
+                        </cell>
+                        <cell>
+                            <hlayout>
+<!--                                <button sclass="border-0 btn btn-outline-info" iconSclass="z-icon-eye"-->
+<!--                                        onClick="winUsuarioList.onClickedVerCehUsuario(event)">-->
+<!--                                    <attribute ca:name="id" name="id">${each.cdPessoa}</attribute>-->
+<!--                                </button>-->
+                                <button sclass="border-0 btn btn-outline-primary" iconSclass="z-icon-pencil"
+                                        onClick="winUsuarioList.onClickedAlterarCehUsuario(event)"
+                                        visible="@load(winUsuarioList$composer.admin)">
+                                    <attribute ca:name="id" name="id">${each.cdPessoa}</attribute>
+                                </button>
+                                <button sclass="border-0 btn btn-outline-danger" iconSclass="z-icon-trash"
+                                        onClick="winUsuarioList.onClickedDeletarCehUsuario(event)"
+                                        visible="@load(winUsuarioList$composer.admin)">
+                                    <attribute ca:name="id" name="id">${each.cdPessoa}</attribute>
+                                </button>
+                            </hlayout>
+                        </cell>
+                    </row>
+                </template>
+            </grid>
+        </div>
+
+        <style>
+            .status-ativo {
+                background-color: #d4edda; /* Verde claro */
+                color: #155724; /* Verde escuro */
+                padding: 5px 10px;
+                border-radius: 15px;
+                font-weight: bold;
+            }
+
+            .status-inativo {
+                background-color: #f8d7da; /* Vermelho claro */
+                color: #721c24; /* Vermelho escuro */
+                padding: 5px 10px;
+                border-radius: 15px;
+                font-weight: bold;
+            }
+
+            .btn-primary {
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            font-weight: bold;
+            padding: 8px 18px;
+            border-radius: 4px;
+            }
+
+            /* Seletor mais específico para não afetar todos os listbox da aplicação.
+            Aplica o estilo apenas em listbox que tiverem a sclass="form-select".
+            */
+            .form-select.z-listbox-select {
+            background-color: #E9ECEF;
+            border: 1px solid #CED4DA;
+            padding: .375rem 2.25rem .375rem .75rem;
+            -moz-padding-start: calc(0.75rem - 3px);
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right .75rem center;
+            background-size: 16px 12px;
+            border-radius: .25rem;
+            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            }
+        </style>
+    </window>
+</zk>

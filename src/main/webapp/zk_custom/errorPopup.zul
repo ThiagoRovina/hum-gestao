@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
+
+    <zscript>
+        Throwable exception = (Throwable) Executions.getCurrent().getAttribute("javax.servlet.error.exception");
+        String exceptionString = org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace(exception);
+    </zscript>
+
+    <window class="windowErroPersonalizado" title="Erro interno" style="max-width:400px;" border="normal" mode="modal" closable="true" xmlns:n="native">
+
+        <script>
+            function mostrarErroDetalhes() {
+                if(document.getElementsByClassName('errodetalhes')[0].style.display == 'none'){
+                    document.getElementsByClassName('errodetalhes')[0].style.display = 'block';
+                    document.getElementsByClassName('botao_detalhes')[0].textContent = 'Ocultar detalhes';
+                }else{
+                    document.getElementsByClassName('errodetalhes')[0].style.display = 'none';
+                    document.getElementsByClassName('botao_detalhes')[0].textContent = 'Ver detalhes';
+                }
+            }
+        </script>
+
+        <attribute name="onCreate">
+            String command = "document.getElementsByClassName('focus')[0].focus();";
+            Clients.evalJavaScript(command);
+        </attribute>
+
+        <style src="/css/bootstrap.css"></style>
+        <style src="/css/zkbootstrap.css"></style>
+
+        <separator></separator>
+        <hbox>
+            <div class="z-messagebox-icon z-icon-ban fa-3x text-danger" />
+            <div sclass="z-messagebox" width="100%">
+                <label multiline="true" value="Ocorreu um erro interno e não será possível continuar com sua solicitação!" sclass="word-wrap text-justify"/>
+                <n:br/>
+                <label multiline="true" value="Se o erro continuar aparecendo, por favor entre em contato com o departamento responsável. " sclass="word-wrap text-justify"/>
+                <a class="botao_detalhes p-3 link-primary" xmlns:w="http://www.zkoss.org/2005/zk/client" w:onClick="mostrarErroDetalhes();">Ver detalhes</a>
+                <div class="errodetalhes" style="display: none; background-color: #f2f2f2; font-family: monospace; font-size: small; overflow: scroll; margin: 2px 16px; height: 140px; ">
+                    <label style="word-break: break-word;">
+                        Erro ${requestScope['javax.servlet.error.status_code']}. ${requestScope['javax.servlet.error.message']}. StackTrace: ${exceptionString}
+                    </label>
+                </div>
+            </div>
+            <div width="10px" />
+        </hbox>
+        <n:br/>
+        <hbox style="margin-left:auto; margin-right:auto">
+            <button label="Continuar" class="btn btn-primary" onClick="spaceOwner.detach()"/>
+            <button label="Atualizar" class="btn btn-primary focus" onClick="Executions.sendRedirect(null)"/>
+        </hbox>
+        <separator></separator>
+        <separator></separator>
+
+    </window>
+
+</zk>

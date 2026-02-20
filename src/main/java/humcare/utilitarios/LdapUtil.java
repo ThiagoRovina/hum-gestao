@@ -17,6 +17,8 @@ import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
+
+import humcare.application.model.Usuario;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
@@ -147,6 +149,39 @@ public class LdapUtil {
         closeConnection(contextAnonymous);
     }
 
+    public boolean emailExists(String email) {
+        if (email == null || email.isBlank()) {
+            return false;
+        }
+
+        DirContext contextAnonymous = null;
+        try {
+            Hashtable<String, String> envAnonymous = createAnonymousEnvironment();
+            contextAnonymous = connectToServer(envAnonymous);
+
+            SearchControls searchControls = new SearchControls();
+            searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+            searchControls.setReturningAttributes(new String[0]);
+
+            NamingEnumeration<SearchResult> searchResults = contextAnonymous.search(LDAP_GROUP, "mail=" + email, searchControls);
+            return searchResults.hasMore();
+
+        } catch (NamingException ex) {
+            return false;
+        } catch (Exception e) {
+            System.out.println("Erro ao pesquisar e-mail no LDAP: " + e.getMessage());
+            return false;
+        } finally {
+            if (contextAnonymous != null) {
+                try {
+                    closeConnection(contextAnonymous);
+                } catch (Exception e) {
+                    // ignore
+                }
+            }
+        }
+    }
+
     private DirContext connectToServer(Hashtable<String, String> env) throws Exception {
         DirContext context;
         try {
@@ -170,6 +205,7 @@ public class LdapUtil {
             }
         }
     }
+
 
     private void searchUser(DirContext context, String filter) throws Exception {
         String[] attrIDs = {"uid"};

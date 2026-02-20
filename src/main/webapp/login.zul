@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?link rel="stylesheet" type="text/css" href="/css/bootstrap.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/zkbootstrap.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/fontawesome.css"?>
+
+<?link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"?>
+<?link rel="icon" type="image/x-icon" href="/images/favicon.ico"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
+    <nodom id="winLogin" use="humcare.login.controller.LoginController" zclass="z-window-overlapped">
+        <include src="/header.zul" />
+        <div sclass="container">
+            <div sclass="row justify-content-center align-items-center" style="min-height: 70vh;">
+                <div sclass="col-md-5 col-lg-4">
+                    <div sclass="card shadow-sm">
+                        <div sclass="card-body p-4">
+                            <n:h3 class="text-center text-primary fw-bold mb-4">Gestão de Leitos</n:h3>
+                            <div sclass="text-center mb-3">
+                                <label id="msg_erro" sclass="text-danger" visible="false" />
+                            </div>
+                            <div sclass="mb-3">
+                                <label value="Email" sclass="form-label" />
+                                <textbox id="usuario" sclass="form-control" placeholder="digite seu email"
+                                         onOK="winLogin.acessar()" />
+                            </div>
+                            <div sclass="mb-3">
+                                <label value="Senha" sclass="form-label" />
+                                <textbox id="senha" type="password" sclass="form-control" placeholder="digite sua senha"
+                                         onOK="winLogin.acessar()" />
+                            </div>
+                            <div sclass="d-grid gap-2 mt-4">
+                                <button id="loginButton" label="Login" sclass="btn btn-primary" onClick="winLogin.acessar()"/>
+                            </div>
+                            <div sclass="d-grid gap-2 mt-4">
+                                <button id="cadastroButton" label="Cadastrar" sclass="btn btn-dark" onClick="winLogin.cadastrarUsuario()"/>
+                            </div>
+                            <div sclass="text-center mt-3">
+                                <n:a href="//npd.uem.br/senha" sclass="text-secondary" style="text-decoration: none;">esqueceu a senha?</n:a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="div_desenv" visible="false" />
+        <label id="lb_versao" style="position: fixed; bottom: 10px; right: 10px; color: #888;" />
+    </nodom>
+</zk>

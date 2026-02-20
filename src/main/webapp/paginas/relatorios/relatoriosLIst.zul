@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
+    <window id="winRelatoriosList" border="none" width="100%" use="humcare.relatorios.controller.RelatoriosListController">
+        <div sclass="container-fluid" style="padding: 20px;">
+            <div class="d-flex pb-4">
+                <div class="col">
+                    <n:h4>Relatórios</n:h4>
+                </div>
+                <div class="col text-end">
+                    <button label="Voltar" iconSclass="z-icon-arrow-left" onClick="winRelatoriosList.voltar()" sclass="btn btn-secondary"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div sclass="card">
+                        <div sclass="card-body">
+                            <n:h5 class="card-title">Ocupação de Leitos</n:h5>
+                            <n:p class="card-text">Relatório detalhado sobre a ocupação dos leitos.</n:p>
+                            <button label="Gerar" sclass="btn btn-primary" onClick="winRelatoriosList.gerarRelatorioOcupacao()"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div sclass="card">
+                        <div sclass="card-body">
+                            <n:h5 class="card-title">Histórico de Higienização</n:h5>
+                            <n:p class="card-text">Relatório de higienizações realizadas.</n:p>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <label value="Data Inicio:*" />
+                                    <datebox id="dtInicioHigienizacao" timeZone="GMT-3" locale="pt_BR" format="dd/MM/yyyy" class="form-control"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label value="Data Fim:*" />
+                                    <datebox id="dtFimHigienizacao" timeZone="GMT-3" locale="pt_BR" format="dd/MM/yyyy" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <label value="Unidade:" />
+                                    <listbox id="unidadeHigienizacao" mold="select" hflex="3" sclass="form-select">
+                                        <listitem value="0" label="Escolha a Unidade" selected="true" />
+                                    </listbox>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <button label="Gerar" sclass="btn btn-primary" onClick="winRelatoriosList.gerarRelatorioHigienizacao()"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </window>
+</zk>

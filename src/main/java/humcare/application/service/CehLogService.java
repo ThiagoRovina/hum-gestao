@@ -24,7 +24,7 @@ public class CehLogService extends GenericDAO<CehLog, Integer> {
     public Integer insereLog(String tabela, TipoOcorrenciaLog tpOcorrencia) {
         CehLog cehLog = new CehLog();
         cehLog.setNmTabela(tabela);
-        cehLog.setCdUsuario(humcare.application.service.Sessao.getInstance().getUsuario().getCdUsuario());
+        cehLog.setCdUsuario(Sessao.getInstance().getUsuario().getCdUsuario());
         cehLog.setDhOcorrencia(new Date());
         cehLog.setTpOcorrencia(tpOcorrencia);
 

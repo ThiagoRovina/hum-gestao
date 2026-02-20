@@ -16,8 +16,8 @@ public class DataUtil {
         super();
     }
 
-    public static java.sql.Date getDataAtualJavaSqlDate() {
-        return new java.sql.Date(Calendar.getInstance().getTimeInMillis());
+    public static Date getDataAtualJavaSqlDate() {
+        return new Date(Calendar.getInstance().getTimeInMillis());
     }
 
     public static java.util.Date getDataAtualJavaUtilDate() {
@@ -43,17 +43,17 @@ public class DataUtil {
         return Integer.parseInt(sdf.format(data));
     }
 
-    public static int getAnoMesDia(java.sql.Date data) {
+    public static int getAnoMesDia(Date data) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         return Integer.parseInt(sdf.format(data));
     }
 
-    public static int getDiaMesAno(java.sql.Date data) {
+    public static int getDiaMesAno(Date data) {
         SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
         return Integer.parseInt(sdf.format(data));
     }
 
-    public static String getDataFormatada(java.sql.Date data) {
+    public static String getDataFormatada(Date data) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         return sdf.format(data);
     }
@@ -64,15 +64,15 @@ public class DataUtil {
     }
 
     public static Date getDataSql(java.sql.Timestamp timestamp) {
-        return new java.sql.Date(timestamp.getTime());
+        return new Date(timestamp.getTime());
     }
 
     public static String getDataAtualFormatada() {
         return getDataFormatada(getDataAtualJavaSqlDate());
     }
 
-    public static java.sql.Date converteStringParaSql(String dataInvertidaStr) {
-        return java.sql.Date.valueOf(dataInvertidaStr);
+    public static Date converteStringParaSql(String dataInvertidaStr) {
+        return Date.valueOf(dataInvertidaStr);
     }
 
     /**
@@ -80,7 +80,7 @@ public class DataUtil {
      * @param data2 A data maior.
      * @return Quantidade de dias.
      */
-    public static int diferencaDeDias(java.sql.Date data1, java.sql.Date data2) {
+    public static int diferencaDeDias(Date data1, Date data2) {
         Calendar c1 = new GregorianCalendar();
         Calendar c2 = new GregorianCalendar();
         c1.setTime(data1);
@@ -95,11 +95,11 @@ public class DataUtil {
      * @param qtdeDias Informar valor positivo para Adicionar, ou valor negativo para Subtrair dias.
      * @return Nova data com quantidade de dias adicionada ou subtraída.
      */
-    public static java.sql.Date adicionaSubtraiDias(java.sql.Date data, int qtdeDias) {
+    public static Date adicionaSubtraiDias(Date data, int qtdeDias) {
         Calendar c = new GregorianCalendar();
         c.setTime(data);
         c.add(Calendar.DATE, qtdeDias);
-        return new java.sql.Date(c.getTimeInMillis());
+        return new Date(c.getTimeInMillis());
     }
 
     public static int getDiaAtual() {
@@ -117,14 +117,14 @@ public class DataUtil {
     public static Date getDataVencimentoCalculada(int nDias) {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, +nDias);
-        return new java.sql.Date(c.getTimeInMillis());
+        return new Date(c.getTimeInMillis());
     }
 
     public static Date getDataVencimentoCalculada(int nDias, int nMeses) {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, +nDias);
         c.add(Calendar.MONTH, +nMeses);
-        return new java.sql.Date(c.getTimeInMillis());
+        return new Date(c.getTimeInMillis());
     }
 
     public static boolean isDataIgual(Date dataUm, Date dataDois) {

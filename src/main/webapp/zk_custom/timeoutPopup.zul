@@ -1,0 +1,35 @@
+<!-- CSS básicos -->
+<?link rel="stylesheet" type="text/css" href="/css/archtectui.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/zkbootstrap.css"?>
+
+<window class="windowErroPersonalizado" title="Sessão expirada" style="max-width:400px;" border="normal" mode="modal" closable="false" xmlns:n="native">
+
+    <attribute name="onCreate">
+        String command = "document.getElementsByClassName('focus')[0].focus();";
+        Clients.evalJavaScript(command);
+    </attribute>
+    
+    <style src="/css/bootstrap.css"></style>
+    <style src="/css/zkbootstrap.css"></style>
+    
+    <separator></separator>
+    <hbox>
+        <div class="z-messagebox-icon z-icon-clock-o fa-3x text-warning" />
+        <div sclass="z-messagebox" width="100%">
+            <label multiline="true" value="Sua sessão expirou!" sclass="word-wrap text-justify" width="100%" />
+            <n:br/>
+            <label multiline="true" value="Você ficou muito tempo com o sistema aberto sem utilizá-lo ou o sistema foi atualizado, então você foi desconectado por segurança." sclass="word-wrap text-justify" width="100%" />
+            <n:br/>
+            <label multiline="true" value="Por favor, clique em Atualizar e tente novamente." sclass="word-wrap" width="100%" />
+            <n:br/>
+        </div>
+        <div width="10px" />
+    </hbox>
+    <n:br/>
+    <hbox style="margin-left:auto; margin-right:auto">
+        <button label="Atualizar" class="btn btn-primary focus" onClick="Executions.sendRedirect(&quot;/index.zul&quot;)"/>
+    </hbox>
+    <separator></separator>
+    <separator></separator>
+    
+</window>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="HUMCare UTI - Início" contentType="text/html;charset=UTF-8"?>
+
+<?link rel="stylesheet" type="text/css" href="/css/bootstrap.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/zkbootstrap.css"?>
+<?link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
+
+    <style>
+        .home-container {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 1.5rem;
+        min-height: calc(100vh - 150px);
+        }
+<!--        .header-row {-->
+<!--        display: flex;-->
+<!--        justify-content: space-between;-->
+<!--        align-items: center;-->
+<!--        margin-bottom: 3rem;-->
+<!--        }-->
+        .user-info {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        }
+        .cards-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        }
+        .card-wrapper-half {
+        flex: 1 1 48%;
+        box-sizing: border-box;
+        }
+        .card-wrapper-full {
+        flex: 1 1 100%;
+        box-sizing: border-box;
+        }
+        .card-content {
+        display: flex;
+        align-items: center;
+        }
+        .card-icon {
+        margin-right: 1.5rem;
+        }
+    </style>
+
+    <nodom id="winHomeController" border="none" width="100%" use="humcare.home.controller.HomeController">
+        <div sclass="home-container">
+
+<!--            <div sclass="header-row">-->
+<!--                <div>-->
+<!--                    <n:h2 class="fw-bold text-primary">HUMCare UTI</n:h2>-->
+<!--                </div>-->
+<!--                <div sclass="user-info">-->
+<!--                    <div sclass="me-3">-->
+<!--                        <label value="${winHomeController.usuarioLogado.nome}" sclass="fw-bold d-block" />-->
+<!--                        <label value="${winHomeController.usuarioLogado.tpPermissaoAcesso}" sclass="text-muted d-block" style="font-size: 0.9em;" />-->
+<!--                    </div>-->
+<!--                    <div>-->
+
+<!--                    </div>-->
+<!--                    <button label="Sair" src="images/sair(2).png" sclass="btn btn-danger" onClick="winHomeController.logout()" />-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <n:hr/>-->
+
+            <div sclass="cards-grid mt-5">
+
+                <div sclass="card-wrapper-half">
+                    <div sclass="card h-100 shadow-sm" onClick="winHomeController.irParaEquipe()" style="cursor: pointer;">
+                        <div sclass="card-body card-content">
+                            <div sclass="card-icon">
+                                <n:img src="images/EquipeIcon.ico"></n:img>
+                            </div>
+                            <div>
+
+                                <n:h5 class="card-title">EQUIPE</n:h5>
+                                <n:p class="card-text text-muted">Cadastro equipe HUM Care</n:p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div sclass="card-wrapper-half">
+                    <div sclass="card h-100 shadow-sm" onClick="winHomeController.irParaCentralNIR()" style="cursor: pointer;">
+                        <div sclass="card-body card-content">
+                            <div sclass="card-icon">
+                                <n:img src="images/centralNIR-icone.ico"></n:img>
+                            </div>
+                            <div>
+                                <n:h5 class="card-title">CENTRAL NIR</n:h5>
+                                <n:p class="card-text text-muted">Visualização em tempo real do status dos leitos.</n:p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div sclass="card-wrapper-half">
+                    <div sclass="card h-100 shadow-sm" onClick="winHomeController.irParaUnidade()" style="cursor: pointer;">
+                        <div sclass="card-body card-content">
+                            <div sclass="card-icon">
+                                <n:img src="images/hospital.png"></n:img>
+                            </div>
+                            <div>
+                                <n:h5 class="card-title">Unidades</n:h5>
+                                <n:p class="card-text text-muted">Visualização das Unidades cadastradas.</n:p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div sclass="card-wrapper-half">
+                    <div sclass="card h-100 shadow-sm" onClick="winHomeController.irParaLeitos()" style="cursor: pointer;">
+                        <div sclass="card-body card-content">
+                            <div sclass="card-icon">
+                                <n:img src="images/medico.png"></n:img>
+                            </div>
+                            <div>
+                                <n:h5 class="card-title">Leitos</n:h5>
+                                <n:p class="card-text text-muted">Visualização de Leitos cadastrados.</n:p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div sclass="card-wrapper-full">
+                    <div sclass="card h-100 shadow-sm" onClick="winHomeController.irParaHigienizacao()" style="cursor: pointer;">
+                        <div sclass="card-body card-content">
+                            <div sclass="card-icon">
+                                <n:img src="images/carrinho-de-limpeza.png"></n:img>
+                            </div>
+                            <div>
+                                <n:h5 class="card-title">Solicitar Higienização</n:h5>
+                                <n:p class="card-text text-muted">Fazer solicitação para a higienização.</n:p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div sclass="card-wrapper-full">
+                    <div sclass="card h-100 shadow-sm" onClick="winHomeController.irParaRelatorios()" style="cursor: pointer;">
+                        <div sclass="card-body card-content">
+                            <div sclass="card-icon">
+                                <n:img src="images/relatorioIcone.ico"></n:img>
+                            </div>
+                            <div>
+                                <n:h5 class="card-title">RELATÓRIOS</n:h5>
+                                <n:p class="card-text text-muted">Relatórios de ocupação, higienização e manutenção.</n:p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </nodom>
+</zk>

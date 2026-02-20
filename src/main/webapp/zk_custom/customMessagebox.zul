@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Multiline Messagebox" language="xul/html"?>
+ 
+<window border="normal" closable="true" use="org.zkoss.zul.impl.MessageboxDlg" mode="modal" title="${arg.title}" style="max-width:400px;">
+ 
+    <style src="/css/bootstrap.css"></style>
+    <style src="/css/zkbootstrap.css"></style>
+    
+    <separator></separator>
+    <hbox>
+        <div class="${arg.icon}" />
+        <div sclass="z-messagebox" width="100%">
+            <label multiline="true" value="${arg.message}" sclass="word-wrap" width="100%" />
+        </div>
+        <div width="10px" />
+    </hbox>
+    
+    <hbox style="margin-left:auto; margin-right:auto">
+        <button identity="${arg.CANCEL}" sclass="btn btn-secondary" use="org.zkoss.zul.impl.MessageboxDlg$Button" if="${!empty arg.CANCEL}" />
+        <button identity="${arg.NO}" sclass="btn btn-secondary" use="org.zkoss.zul.impl.MessageboxDlg$Button" if="${!empty arg.NO}" />
+        <button identity="${arg.IGNORE}" sclass="btn btn-primary" use="org.zkoss.zul.impl.MessageboxDlg$Button" if="${!empty arg.IGNORE}" />
+        <button identity="${arg.ABORT}" sclass="btn btn-primary" use="org.zkoss.zul.impl.MessageboxDlg$Button" if="${!empty arg.ABORT}" />
+        <button identity="${arg.OK}" sclass="btn btn-primary" use="org.zkoss.zul.impl.MessageboxDlg$Button" if="${!empty arg.OK}" />
+        <button identity="${arg.YES}" sclass="btn btn-primary" use="org.zkoss.zul.impl.MessageboxDlg$Button" if="${!empty arg.YES}" />
+        <button identity="${arg.RETRY}" sclass="btn btn-primary" use="org.zkoss.zul.impl.MessageboxDlg$Button" if="${!empty arg.RETRY}" />
+    </hbox>
+    <separator></separator>
+    <separator></separator>
+</window>

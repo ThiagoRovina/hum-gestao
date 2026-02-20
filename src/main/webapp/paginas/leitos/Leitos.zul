@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
+
+    <window id="winLeito" use="humcare.leitos.controller.LeitosController" border="none">
+
+        <div sclass="container-fluid" style="padding: 45px;">
+
+            <div class="d-flex pb-4">
+                <div class="col">
+                    <n:h4>Cadastro de Leito</n:h4>
+                </div>
+                <div class="col text-end">
+                    <button label="Voltar" iconSclass="z-icon-arrow-left" onClick="winLeito.voltar()" sclass="btn btn-secondary"/>
+                </div>
+            </div>
+
+            <div sclass="card">
+                <div class="card-body">
+                    <div class="col-md-1" visible="false">
+                        <label value="Código:" />
+                        <label id="cdLeito" value=""/>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label value="Unidade:*" />
+                        <listbox id="cdUnidade" mold="select" sclass="form-select">
+                            <listitem label="Selecione uma unidade..." selected="true" disabled="true" />
+                        </listbox>
+                    </div>
+
+                    <div class="row g-3 mt-3">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label value="Identificador do Leito:*" />
+                                <textbox id="idLeito" maxlength="50" sclass="form-control" placeholder="Ex: 101-A, Apartamento 203, etc."/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label value="Status do Leito:*" />
+                            <listbox id="stLeito" mold="select" sclass="form-select">
+<!--                                <listitem label="Selecione um status..." selected="true" disabled="true" />-->
+
+<!--                                <listitem label="Livre" value="LIVRE"/>-->
+<!--                                <listitem label="Ocupado" value="OCUPADO"/>-->
+<!--                                <listitem label="Em Higienização" value="HIGIENIZANDO"/>-->
+<!--                                <listitem label="Pré-Reservado" value="PRERESERVADO"/>-->
+<!--                                <listitem label="Aguardando Liberação" value="AGUARDANDO"/>-->
+<!--                                <listitem label="Desativado" value="DESATIVADO"/>-->
+                            </listbox>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-2">
+                            <label id="lbAtivo" value="Status:" />
+                            <checkbox mold="switch" id="flAtivo" style="display: block;" onCheck="winLeito.mudarStatusLabel()" />
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mt-4">
+                        <div class="d-flex">
+                            <div class="col-md-6">
+                                <button class="btn btn-outline-danger" iconSclass="z-icon-trash" id="excluir" label="Inativar Leito" onClick="winLeito.excluir()" visible="false"/>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <button class="btn btn-secondary me-2" iconSclass="z-icon-times" id="cancelar" label="Cancelar" onClick="winLeito.voltar()" visible="true"/>
+                                <button class="btn btn-primary" iconSclass="z-icon-check" id="salvar" label="Salvar" onClick="winLeito.gravar()" visible="true"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </window>
+</zk>

@@ -41,6 +41,15 @@
 
         <!-- Lista das classes modelo que representa tabelas do banco de dados para o hibernate mapear -->
 
+        <mapping class="humcare.application.model.CehLog" />
+        <mapping class="humcare.application.model.PatrimonioSetor" />
+        <mapping class="humcare.usuario.model.CehUsuario" />
+        <mapping class="humcare.permissao.model.Permissao" />
+        <mapping class="humcare.unidade.model.Unidade" />
+        <mapping class="humcare.higienizacao.model.Higienizacao" />
+        <mapping class="humcare.leitos.model.Leitos" />
+        <mapping class="humcare.leitos.dto.LeitosListDTO" />
+        <mapping class="humcare.leitos.dto.LeitosHigienizacaoListDTO" />
         <!--        <mapping class="curso.model.Curso"/>-->
         <!-- Lista das classes do Banco -->
 <!--        <mapping class="inscricao.model.Inscricao" />-->

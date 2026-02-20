@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
+
+    <window id="winUnidade" use="humcare.unidade.controller.UnidadeController" border="none">
+
+        <div sclass="container-fluid" style="padding: 45px;">
+
+            <div class="d-flex pb-4">
+                <div class="col">
+                    <n:h4>Cadastro de Unidade</n:h4>
+                </div>
+                <div class="col text-end">
+                    <button label="Voltar" iconSclass="z-icon-arrow-left" onClick="winUnidade.voltar()" sclass="btn btn-secondary"/>
+                </div>
+            </div>
+
+            <div sclass="card">
+                <div sclass="card-body">
+                    <div class="col-md-1" visible="false">
+                        <label value="Código:" />
+                        <label id="cdUnidade" value=""/>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label value="Nome da Unidade:*" />
+                            <textbox id="deUnidade" maxlength="150" sclass="form-control" placeholder="Digite o nome da unidade"/>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-2">
+                            <label id="lbAtivo" value="Status:" />
+                            <checkbox mold="switch" id="flAtivo" style="display: block;" onCheck="winUnidade.mudarStatusLabel()" />
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mt-4">
+                        <div class="d-flex">
+                            <div class="col-md-6">
+                                <button class="btn btn-outline-danger" iconSclass="z-icon-trash" id="excluir" label="Excluir Unidade" onClick="winUnidade.excluir()" visible="false"/>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <button class="btn btn-secondary me-2" iconSclass="z-icon-times" id="cancelar" label="Cancelar" onClick="winUnidade.voltar()" visible="true"/>
+                                <button class="btn btn-primary" iconSclass="z-icon-check" id="salvar" label="Salvar" onClick="winUnidade.gravar()" visible="true"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </window>
+</zk>

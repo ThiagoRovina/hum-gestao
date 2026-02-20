@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/style.css"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native" xmlns:ca="client/attribute">
+
+    <nodom id="winCentralNIRList" border="none" width="100%" use="humcare.nir.controller.CentralNirLIstController">
+        <style>
+
+            .bed-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px; /* Espaço entre o card e o nome */
+            }
+
+            .bed-card {
+            width: 160px;
+            height: 120px;
+            border-radius: 12px;
+            padding: 12px;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-transform: uppercase;
+            }
+
+            .bed-card.ocupado { background-color: #005A9C; }
+            .bed-card.higienizacao { background-color: #F7941D; }
+            .bed-card.livre { background-color: #00A651; }
+            .bed-card.desativado { background-color: #808080; color: #E0E0E0; }
+
+            .card-main-content { text-align: center; }
+            .status-label { font-size: 14px; font-weight: bold; }
+            .badge {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 4px 8px;
+            margin-top: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            }
+
+            .card-footer { text-align: left; }
+            .timestamp-label { font-size: 10px; opacity: 0.8; display: block; }
+
+            .bed-id-label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            }
+        </style>
+
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pd-2 bd-highlight d-flex justify-content-end">
+                        <button label="Voltar" iconSclass="z-icon-arrow-left" sclass="btn btn-light" onClick="winCentralNIRList.voltar()" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="pd-2 bd-highlight d-flex justify-content-end">
+                        <button id="btnNovo" label="Novo" iconSclass="z-icon-plus" sclass="btn btn-primary"
+                                onClick="winCentralNIRList.novoLeito()" />
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="resultados" />
+
+            <n:hr />
+
+            <paging id="pagingResultados" pageSize="9" onPaging="winCentralNIRList.renderizarPagina()"/>
+
+        </div>
+    </nodom>
+</zk>

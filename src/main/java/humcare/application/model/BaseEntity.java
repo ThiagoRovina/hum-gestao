@@ -12,7 +12,7 @@ import java.util.Date;
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 
-    @Column(name = "FL_ATIVO")
+    @Column(name="FL_ATIVO")
     private Boolean flAtivo;
 
     @PrePersist

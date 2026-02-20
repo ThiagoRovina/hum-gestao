@@ -8,6 +8,8 @@ package humcare.application.service;
 
 import humcare.application.model.Usuario;
 import java.util.HashMap;
+
+import humcare.usuario.model.CehUsuario;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
@@ -62,7 +64,7 @@ public class Sessao {
         Session session = Sessions.getCurrent();
         Usuario u = (Usuario) session.getAttribute(ATRIBUTO_USUARIO);
         if (u == null) {
-            Executions.sendRedirect("/login");
+            Executions.sendRedirect("/login.zul");
             return false;
         }
         return true;
@@ -71,7 +73,7 @@ public class Sessao {
     public void destruirSessao() {
         Session session = Sessions.getCurrent();
         session.invalidate();
-        Executions.sendRedirect("/login");
+        Executions.sendRedirect("/login.zul");
     }
 
     /*
@@ -133,6 +135,10 @@ public class Sessao {
      */
     public Usuario getUsuario() {
         return (Usuario) this.getAtributo(ATRIBUTO_USUARIO);
+    }
+
+    public CehUsuario getCehUsuario() {
+        return (CehUsuario) this.getAtributo(ATRIBUTO_USUARIO);
     }
 
     public void setUsuario(Usuario u) {

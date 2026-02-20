@@ -1,0 +1,33 @@
+<!--<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native" xmlns:w="client">-->
+
+<!--    <n:nav class="navbar navbar-expand-lg" style="background-color: #bde9ff; background-repeat: repeat-x; background-position: bottom; height: 100px; display: flex; align-items: center;">-->
+<!--        <div class="container-fluid">-->
+<!--            <a class="navbar-brand" href="/index.zul">Home</a>-->
+<!--            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--                <n:span class="navbar-toggler-icon"></n:span>-->
+<!--            </button>-->
+<!--            <div class="collapse navbar-collapse" id="navbarNav">-->
+<!--                <n:ul class="navbar-nav">-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="/leitos/leito.zul">Leitos</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="/pacientes/paciente.zul">Pacientes</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="/solicitacoes/solicitacao.zul">Solicitações</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="/higienizacao/historico.zul">Histórico de Higienização</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="/relatorios/relatorio.zul">Relatórios</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="/administracao/admin.zul">Administração</a>-->
+<!--                    </li>-->
+<!--                </n:ul>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </n:nav>-->
+<!--</zk>-->

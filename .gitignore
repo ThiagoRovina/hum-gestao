@@ -1,0 +1,14 @@
+# Pasta de build do Maven
+/target/
+
+# Pasta de build do IntelliJ
+/out/
+
+# Configurações da IDE (IntelliJ)
+/.idea/
+*.iml
+
+# Arquivos de log e temporários
+*.log
+.DS_Store
+Thumbs.db

@@ -426,7 +426,7 @@ public class ZkUtils {
        ***************************** */
     public void criaDiretorio(String novoDiretorio, String caminho) {
         String nomeDiretorio = null;
-        String separador = java.io.File.separator;
+        String separador = File.separator;
         try {
             nomeDiretorio = caminho + novoDiretorio;
             if (!new File(nomeDiretorio).exists()) { // Verifica se o diretório existe.   
@@ -868,6 +868,13 @@ public class ZkUtils {
         }
 
         return true;
+    }
+
+    public static String capitalize(String str) {
+        if (str == null || str.isEmpty()) {
+            return str; // Retorna a string como está se for nula ou vazia
+        }
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
 }
