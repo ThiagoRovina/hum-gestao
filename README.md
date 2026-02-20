@@ -33,27 +33,13 @@ Sumário
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 EQUIPE
 
 Responsável: Elias Cesar Araujo de Carvalho
+Desenvolvedor: Thiago Rodrigues Rovina
 Solicitante:  
 Data:
-Analistas: Wagner Silva;
+Analistas:  Elias Cesar Araujo de Carvalho;
 
 
 Redmine:
@@ -175,435 +161,6 @@ Esta seção apresentará protótipos de telas meramente ilustrativas.
 PROTÓTIPO NAVEGÁVEL HUMCAREUTI
 VISÃO GESTOR
 
-Home- Login Gestor
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figura 1-Tela home
-
-Área Logada- Menu Gestor
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figura 2- Área Logada
-
-
-Equipe - Cadastro Equipe
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figura 3-Cadastro Equipe-Trocar Perfil por Área de Atuação
-
-
-Novo- Cadastro profissional
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figura 4- Cadastro profissional-Trocar Unidade por Setor
-
-
-
-
-Equipe- Lista Equipe
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figura 5-Lista Profissionais-Trocar Perfil por Área de Atuação e Unidade por Setor
-
-
-Relatórios- Gerar Relatórios
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figura 6-Relatórios - Trocar Unidade por Setor
-
-
-
-
-
-Relatórios- Relatórios
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figura 7- Relatórios-Trocar Unidade por Setor
-
-
-VISÃO NIR (Núcleo Interno de Regulação)
-
-
-
-Home- Login Profissional NIR
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figura 8-Tela Home
-
-
-
-Home- Visão Profissional NIR (se o Leito estiver no Status LIVRE o NIR pode fazer a PRÉ-RESERVA do leito)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figura 9-Tela visão NIR
-
-
-VISÃO ENFERMAGEM
-
-
-Home- Login Profissional Executante
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figura 10-Tela Home
-
-
-
-Home- Área Logada
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figura 11-Tela Home
-
-
-
-Iniciar higienização- Área Logada
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figura 12-Início higienização
-
-
-
-
-
-
-Confirma Higienização- seleciona tipo de higienização
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figura 13- Iniciar higienização
-
-
-
-
-
-
-
-Andamento higienização-  Higienização
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figura 14-higienização
-
-
-Finalizar higienização-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figura 15-Finalizar Atendimento
-
-
-
-
-
-
-Nova Admissão de leito-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figura 16- Atender Novo Paciente
-
-
-Desativar leito-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figura 17-Desativar leito
-
-
-
-
-
-
-Leito desativado-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figura 18- Leito desativado
-
-Ativar Leito-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Figura 19- leito ativado
 
 FLUXO DE UTILIZAÇÃO
 Para explicar a utilização básica do sistema verificar essa sessão.
@@ -621,51 +178,51 @@ LISTA DE PROFISSIONAIS CADASTRADOS; fig.5
 GESTOR - Central NIR
 Para verificar os status dos leitos devem se seguir os seguintes passos:
 
-ACESSAR O SISTEMA; fig.1
-CLICAR EM CENTRAL NIR ; fig.2
-LISTAR ATENDIMENTOS; fig.9
+ACESSAR O SISTEMA; 
+CLICAR EM CENTRAL NIR ;
+LISTAR ATENDIMENTOS; 
 
 GESTOR - Relatórios de atendimentos
 Para verificar os atendimentos passados e atuais devem se seguir os seguintes passos:
 
-ACESSAR O SISTEMA; fig.1
-CLICAR EM RELATÓRIOS ; fig.2
+ACESSAR O SISTEMA; 
+CLICAR EM RELATÓRIOS ;
 ESCOLHER O TIPO DE RELATÓRIO A SER GERADO;
 
 PROFISSIONAL EXECUTANTE - Iniciar a higienização
 Para o profissional executante iniciar uma nova higienização devem se seguir os seguintes passos:
 
-ACESSAR O SISTEMA; fig.10
-ESCOLHER O LEITO A SER HIGIENIZADO (STATUS OCUPADO) ; fig.11
-CLICAR EM INICIAR HIGIENIZAÇÃO; fig.12
-CLASSIFICAR QUAL TIPO DE HIGIENIZAÇÃO SERÁ APLICADA ; fig.13
-CLICAR EM INICIAR ATENDIMENTO; fig.13
-ao final do atendimento CLICAR EM FINALIZAR ATENDIMENTO;fig.14
+ACESSAR O SISTEMA; 
+ESCOLHER O LEITO A SER HIGIENIZADO (STATUS OCUPADO) ; 
+CLICAR EM INICIAR HIGIENIZAÇÃO; 
+CLASSIFICAR QUAL TIPO DE HIGIENIZAÇÃO SERÁ APLICADA ; 
+CLICAR EM INICIAR ATENDIMENTO; 
+ao final do atendimento CLICAR EM FINALIZAR ATENDIMENTO;
 
 PROFISSIONAL EXECUTANTE - Finalizar a higienização
 Para o profissional executante efetuar ALTA de um paciente devem se seguir os seguintes passos:
 
-ACESSAR O SISTEMA; fig.9
-ESCOLHER O LEITO A SER HIGIENIZADO (STATUS EM HIGIENIZAÇÃO) ; fig.14
-CLICAR EM FINALIZAR; fig.14
-CLICAR EM SIM; fig.15
-LEITO COM STATUS DISPONÍVEL PARA NOVA ADMISSÃO; fig.16
+ACESSAR O SISTEMA; 
+ESCOLHER O LEITO A SER HIGIENIZADO (STATUS EM HIGIENIZAÇÃO) ;
+CLICAR EM FINALIZAR; 
+CLICAR EM SIM; 
+LEITO COM STATUS DISPONÍVEL PARA NOVA ADMISSÃO; 
 
 PROFISSIONAL EXECUTANTE - Desativar leito (manutenção)
 Para o profissional executante desativar qualquer leito por motivos de manutenção  devem se seguir os seguintes passos:
 
-ACESSAR O SISTEMA; fig.9
-ESCOLHER O LEITO A SER DESATIVADO (EM QUALQUER STATUS) ; fig.14
-CLICAR EM EQUIPAMENTO EM MANUTENÇÃO; fig.16
-CONFIRMAR MANUTENÇÃO; fig.17
+ACESSAR O SISTEMA; 
+ESCOLHER O LEITO A SER DESATIVADO (EM QUALQUER STATUS) ; 
+CLICAR EM EQUIPAMENTO EM MANUTENÇÃO;
+CONFIRMAR MANUTENÇÃO; 
 
 PROFISSIONAL EXECUTANTE - Ativar leito (manutenção)
 Para o profissional executante desativar qualquer leito por motivos de manutenção  devem se seguir os seguintes passos:
 
-ACESSAR O SISTEMA; fig.9
-ESCOLHER O LEITO A SER ATIVADO (STATUS DESATIVADO) ; fig.14
-CLICAR EM ATIVAR LEITO; fig.18
-CONFIRMAR ATIVAÇÃO; fig.19
+ACESSAR O SISTEMA; 
+ESCOLHER O LEITO A SER ATIVADO (STATUS DESATIVADO) ;
+CLICAR EM ATIVAR LEITO;
+CONFIRMAR ATIVAÇÃO; 
 
 
 
